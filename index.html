@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>OwnAI · Descarga para Android</title>
+<meta name="description" content="Instala OwnAI en tu Android. Convierte tus objetivos en acciones diarias con hábitos, rutinas y un coach con IA." />
+<meta name="theme-color" content="#04060F" />
+<link rel="icon" href="assets/favicon.png" />
+<link rel="apple-touch-icon" href="assets/icon.png" />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content="OwnAI · Instálala en tu Android" />
+<meta property="og:description" content="Toca para descargar. Convierte tus objetivos en acciones diarias con hábitos, rutinas y un coach con IA." />
+<meta property="og:image" content="https://cbtravelperu-dev.github.io/ownai-descarga/assets/og.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url" content="https://cbtravelperu-dev.github.io/ownai-descarga/" />
+<meta property="og:site_name" content="OwnAI" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #04060F;
+    --ambient-navy: #08152A;
+    --ambient-deep: #060A18;
+    --primary: #7EE8F2;
+    --primary-end: #6EE5DE;
+    --accent-cyan: #B0F2FF;
+    --spark-violet: #C99CFF;
+    --spark-blue: #66EBFF;
+    --text: rgba(255, 255, 255, 0.97);
+    --text-2: rgba(255, 255, 255, 0.60);
+    --text-3: rgba(255, 255, 255, 0.45);
+    --glass: rgba(10, 16, 22, 0.42);
+    --glass-high: rgba(5, 9, 13, 0.66);
+    --border: rgba(255, 255, 255, 0.09);
+    --border-strong: rgba(255, 255, 255, 0.16);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ---- Fondo ambiental (réplica web del ambient glow de la app) ---- */
+  .ambient {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+    background:
+      radial-gradient(120% 90% at 50% -10%, var(--ambient-navy) 0%, transparent 60%),
+      radial-gradient(100% 80% at 50% 110%, var(--ambient-deep) 0%, transparent 65%);
+  }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    will-change: transform;
+  }
+  .blob-cyan {
+    width: 62vmax; height: 62vmax;
+    top: -28vmax; left: -18vmax;
+    background: radial-gradient(circle, rgba(102, 235, 255, 0.30) 0%, transparent 70%);
+    animation: drift-a 26s ease-in-out infinite alternate;
+  }
+  .blob-violet {
+    width: 58vmax; height: 58vmax;
+    bottom: -30vmax; right: -20vmax;
+    background: radial-gradient(circle, rgba(201, 156, 255, 0.26) 0%, transparent 70%);
+    animation: drift-b 32s ease-in-out infinite alternate;
+  }
+  @keyframes drift-a {
+    from { transform: translate3d(0, 0, 0) scale(1); }
+    to   { transform: translate3d(6vmax, 4vmax, 0) scale(1.12); }
+  }
+  @keyframes drift-b {
+    from { transform: translate3d(0, 0, 0) scale(1.08); }
+    to   { transform: translate3d(-5vmax, -4vmax, 0) scale(1); }
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    max-width: 520px;
+    margin: 0 auto;
+    padding: 48px 20px calc(40px + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  /* ---- Marca ---- */
+  .mark {
+    width: 108px; height: 108px;
+    display: grid; place-items: center;
+    margin-bottom: 26px;
+    animation: breathe 5.5s ease-in-out infinite;
+  }
+  .mark svg { width: 100%; height: 100%; display: block; }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); opacity: 0.92; }
+    50%      { transform: scale(1.05); opacity: 1; }
+  }
+
+  h1 {
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    margin: 0 0 12px;
+    background: linear-gradient(120deg, #FFFFFF 0%, var(--accent-cyan) 55%, var(--primary) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .tagline {
+    font-size: 16.5px;
+    line-height: 1.55;
+    color: var(--text-2);
+    margin: 0 0 34px;
+    max-width: 22em;
+    font-weight: 400;
+  }
+
+  /* ---- Botón de descarga ---- */
+  .cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 11px;
+    width: 100%;
+    padding: 19px 26px;
+    border-radius: 999px;
+    background: linear-gradient(100deg, var(--primary) 0%, var(--primary-end) 100%);
+    color: #04121A;
+    font-size: 17.5px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+    box-shadow: 0 14px 44px rgba(126, 232, 242, 0.30);
+    transition: transform 160ms ease, box-shadow 160ms ease;
+  }
+  .cta:active { transform: scale(0.975); box-shadow: 0 8px 26px rgba(126, 232, 242, 0.24); }
+  .cta svg { width: 21px; height: 21px; flex-shrink: 0; }
+
+  .meta {
+    margin-top: 14px;
+    font-size: 13.5px;
+    color: var(--text-3);
+    letter-spacing: 0.01em;
+  }
+
+  /* ---- Pasos ---- */
+  .steps {
+    width: 100%;
+    margin-top: 40px;
+    padding: 8px 20px 20px;
+    border-radius: 20px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    text-align: left;
+  }
+  .steps h2 {
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--text-3);
+    margin: 20px 0 18px;
+  }
+  .step {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 11px 0;
+  }
+  .step + .step { border-top: 1px solid rgba(255, 255, 255, 0.055); }
+  .num {
+    flex-shrink: 0;
+    width: 27px; height: 27px;
+    border-radius: 50%;
+    display: grid; place-items: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--primary);
+    background: rgba(126, 232, 242, 0.13);
+    border: 1px solid rgba(126, 232, 242, 0.24);
+    margin-top: 1px;
+  }
+  .step p {
+    margin: 0;
+    font-size: 14.8px;
+    line-height: 1.5;
+    color: var(--text-2);
+  }
+  .step strong { color: var(--text); font-weight: 500; }
+
+  .note {
+    margin-top: 26px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-3);
+    max-width: 30em;
+  }
+  .note b { color: var(--text-2); font-weight: 500; }
+
+  #not-android {
+    display: none;
+    width: 100%;
+    margin-bottom: 24px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    background: rgba(255, 181, 98, 0.10);
+    border: 1px solid rgba(255, 181, 98, 0.28);
+    color: #FFD9A8;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  footer {
+    margin-top: 36px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.28);
+    letter-spacing: 0.02em;
+  }
+
+  @media (max-width: 380px) {
+    h1 { font-size: 34px; }
+    .cta { font-size: 16px; padding: 17px 20px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .blob, .mark { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ambient" aria-hidden="true">
+  <div class="blob blob-cyan"></div>
+  <div class="blob blob-violet"></div>
+</div>
+
+<main>
+  <div class="mark" aria-hidden="true">
+    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95" />
+          <stop offset="45%" stop-color="#B0F2FF" stop-opacity="0.42" />
+          <stop offset="100%" stop-color="#7EE8F2" stop-opacity="0" />
+        </radialGradient>
+        <linearGradient id="spark" x1="50" y1="4" x2="50" y2="96" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#FFFFFF" />
+          <stop offset="50%" stop-color="#EAFCFF" />
+          <stop offset="100%" stop-color="#B0F2FF" />
+        </linearGradient>
+      </defs>
+      <circle cx="50" cy="50" r="46" fill="url(#glow)" />
+      <path d="M50 3 C52.5 30.5 61.5 44 97 50 C61.5 56 52.5 69.5 50 97 C47.5 69.5 38.5 56 3 50 C38.5 44 47.5 30.5 50 3 Z" fill="url(#spark)" />
+    </svg>
+  </div>
+
+  <h1>OwnAI</h1>
+  <p class="tagline">Convierte tus objetivos en acciones diarias, con hábitos, rutinas y un coach con IA que te acompaña.</p>
+
+  <div id="not-android">
+    Esta versión es <b>solo para Android</b>. Abre este enlace desde tu teléfono Android para instalarla.
+  </div>
+
+  <a class="cta" id="download" href="#" download>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3v12" />
+      <path d="M7 11l5 5 5-5" />
+      <path d="M4 20h16" />
+    </svg>
+    Descargar para Android
+  </a>
+  <p class="meta" id="meta">Versión 1.0.0 · 129 MB · Android 7.0+</p>
+
+  <section class="steps">
+    <h2>Cómo instalarla</h2>
+    <div class="step">
+      <div class="num">1</div>
+      <p>Toca <strong>Descargar para Android</strong>. El archivo se guarda en tus Descargas.</p>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <p>Abre el archivo descargado. Android te pedirá permiso: activa <strong>«Permitir desde esta fuente»</strong> y vuelve atrás.</p>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <p>Pulsa <strong>Instalar</strong> y luego <strong>Abrir</strong>. Crea tu cuenta y listo.</p>
+    </div>
+  </section>
+
+  <p class="note">
+    Android muestra un aviso porque la app aún no viene de Google Play: es <b>normal en una versión de prueba</b> y puedes continuar con seguridad.<br /><br />
+    Si el enlace se abrió dentro de WhatsApp y no descarga, toca los tres puntos <b>⋮ → Abrir en el navegador</b>.
+  </p>
+
+  <footer id="footer">OwnAI · versión de prueba</footer>
+</main>
+
+<script>
+  var APK_URL = 'https://github.com/cbtravelperu-dev/ownai-descarga/releases/latest/download/OwnAI.apk';
+  document.getElementById('download').href = APK_URL;
+
+  if (!/android/i.test(navigator.userAgent)) {
+    document.getElementById('not-android').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
