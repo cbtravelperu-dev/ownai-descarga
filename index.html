@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>OwnAI · Descarga para Android</title>
 <meta name="description" content="Instala OwnAI en tu Android. Convierte tus objetivos en acciones diarias con hábitos, rutinas y un coach con IA." />
-<meta name="theme-color" content="#04060F" />
+<meta name="theme-color" content="#150F30" />
 <link rel="icon" href="assets/favicon.png" />
 <link rel="apple-touch-icon" href="assets/icon.png" />
 
@@ -24,22 +24,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
 <style>
+  /* Paleta muestreada pixel a pixel de assets/splash.png (la portada real de la app)
+     más los spark* de constants/colors.ts. */
   :root {
-    --bg: #04060F;
-    --ambient-navy: #08152A;
-    --ambient-deep: #060A18;
-    --primary: #7EE8F2;
-    --primary-end: #6EE5DE;
-    --accent-cyan: #B0F2FF;
-    --spark-violet: #C99CFF;
-    --spark-blue: #66EBFF;
+    --bg: #150F30;
+    --bg-deep: #100B26;
+    --glow-1: #7B5A85;
+    --glow-2: #5C3C69;
+    --glow-3: #482C58;
+    --glow-4: #2C1C43;
+
+    --violet: #C99CFF;
+    --pink: #E0AAFF;
+    --ice: #B0F2FF;
+    --cyan: #7EE8F2;
+
     --text: rgba(255, 255, 255, 0.97);
-    --text-2: rgba(255, 255, 255, 0.60);
-    --text-3: rgba(255, 255, 255, 0.45);
-    --glass: rgba(10, 16, 22, 0.42);
-    --glass-high: rgba(5, 9, 13, 0.66);
-    --border: rgba(255, 255, 255, 0.09);
-    --border-strong: rgba(255, 255, 255, 0.16);
+    --text-2: rgba(255, 255, 255, 0.64);
+    --text-3: rgba(255, 255, 255, 0.44);
+    --glass: rgba(38, 26, 76, 0.42);
+    --border: rgba(201, 156, 255, 0.16);
   }
 
   * { box-sizing: border-box; }
@@ -54,43 +58,36 @@
     overflow-x: hidden;
   }
 
-  /* ---- Fondo ambiental (réplica web del ambient glow de la app) ---- */
+  /* ---- Portada: réplica del degradado radial del splash ---- */
   .ambient {
     position: fixed;
     inset: 0;
     z-index: 0;
-    overflow: hidden;
     pointer-events: none;
     background:
-      radial-gradient(120% 90% at 50% -10%, var(--ambient-navy) 0%, transparent 60%),
-      radial-gradient(100% 80% at 50% 110%, var(--ambient-deep) 0%, transparent 65%);
+      radial-gradient(circle 620px at 50% 26%,
+        var(--glow-1) 0%,
+        var(--glow-2) 16%,
+        var(--glow-3) 30%,
+        var(--glow-4) 52%,
+        var(--bg) 76%),
+      var(--bg-deep);
   }
-  .blob {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.5;
-    will-change: transform;
+  .halo {
+    position: fixed;
+    top: 26%;
+    left: 50%;
+    width: 78vmax; height: 78vmax;
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(circle, rgba(224, 170, 255, 0.20) 0%, rgba(201, 156, 255, 0.07) 38%, transparent 68%);
+    filter: blur(30px);
+    animation: pulse 7s ease-in-out infinite;
   }
-  .blob-cyan {
-    width: 62vmax; height: 62vmax;
-    top: -28vmax; left: -18vmax;
-    background: radial-gradient(circle, rgba(102, 235, 255, 0.30) 0%, transparent 70%);
-    animation: drift-a 26s ease-in-out infinite alternate;
-  }
-  .blob-violet {
-    width: 58vmax; height: 58vmax;
-    bottom: -30vmax; right: -20vmax;
-    background: radial-gradient(circle, rgba(201, 156, 255, 0.26) 0%, transparent 70%);
-    animation: drift-b 32s ease-in-out infinite alternate;
-  }
-  @keyframes drift-a {
-    from { transform: translate3d(0, 0, 0) scale(1); }
-    to   { transform: translate3d(6vmax, 4vmax, 0) scale(1.12); }
-  }
-  @keyframes drift-b {
-    from { transform: translate3d(0, 0, 0) scale(1.08); }
-    to   { transform: translate3d(-5vmax, -4vmax, 0) scale(1); }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.75; transform: translate(-50%, -50%) scale(1); }
+    50%      { opacity: 1;    transform: translate(-50%, -50%) scale(1.07); }
   }
 
   main {
@@ -98,32 +95,32 @@
     z-index: 1;
     max-width: 520px;
     margin: 0 auto;
-    padding: 48px 20px calc(40px + env(safe-area-inset-bottom));
+    padding: 52px 20px calc(40px + env(safe-area-inset-bottom));
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
 
-  /* ---- Marca ---- */
+  /* ---- Destello de marca ---- */
   .mark {
-    width: 108px; height: 108px;
+    width: 132px; height: 132px;
     display: grid; place-items: center;
-    margin-bottom: 26px;
+    margin-bottom: 22px;
     animation: breathe 5.5s ease-in-out infinite;
   }
   .mark svg { width: 100%; height: 100%; display: block; }
   @keyframes breathe {
-    0%, 100% { transform: scale(1); opacity: 0.92; }
-    50%      { transform: scale(1.05); opacity: 1; }
+    0%, 100% { transform: scale(1); opacity: 0.94; }
+    50%      { transform: scale(1.045); opacity: 1; }
   }
 
   h1 {
-    font-size: 40px;
+    font-size: 42px;
     font-weight: 600;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.035em;
     margin: 0 0 12px;
-    background: linear-gradient(120deg, #FFFFFF 0%, var(--accent-cyan) 55%, var(--primary) 100%);
+    background: linear-gradient(120deg, #FFFFFF 0%, #F3E6FF 45%, var(--violet) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -135,7 +132,6 @@
     color: var(--text-2);
     margin: 0 0 34px;
     max-width: 22em;
-    font-weight: 400;
   }
 
   /* ---- Botón de descarga ---- */
@@ -147,23 +143,22 @@
     width: 100%;
     padding: 19px 26px;
     border-radius: 999px;
-    background: linear-gradient(100deg, var(--primary) 0%, var(--primary-end) 100%);
-    color: #04121A;
+    background: linear-gradient(100deg, var(--violet) 0%, var(--pink) 42%, var(--ice) 100%);
+    color: #1B0F33;
     font-size: 17.5px;
     font-weight: 600;
     letter-spacing: -0.01em;
     text-decoration: none;
-    box-shadow: 0 14px 44px rgba(126, 232, 242, 0.30);
+    box-shadow: 0 14px 46px rgba(201, 156, 255, 0.34);
     transition: transform 160ms ease, box-shadow 160ms ease;
   }
-  .cta:active { transform: scale(0.975); box-shadow: 0 8px 26px rgba(126, 232, 242, 0.24); }
+  .cta:active { transform: scale(0.975); box-shadow: 0 8px 26px rgba(201, 156, 255, 0.26); }
   .cta svg { width: 21px; height: 21px; flex-shrink: 0; }
 
   .meta {
     margin-top: 14px;
     font-size: 13.5px;
     color: var(--text-3);
-    letter-spacing: 0.01em;
   }
 
   /* ---- Pasos ---- */
@@ -192,7 +187,7 @@
     align-items: flex-start;
     padding: 11px 0;
   }
-  .step + .step { border-top: 1px solid rgba(255, 255, 255, 0.055); }
+  .step + .step { border-top: 1px solid rgba(201, 156, 255, 0.10); }
   .num {
     flex-shrink: 0;
     width: 27px; height: 27px;
@@ -200,9 +195,9 @@
     display: grid; place-items: center;
     font-size: 13px;
     font-weight: 600;
-    color: var(--primary);
-    background: rgba(126, 232, 242, 0.13);
-    border: 1px solid rgba(126, 232, 242, 0.24);
+    color: var(--violet);
+    background: rgba(201, 156, 255, 0.14);
+    border: 1px solid rgba(201, 156, 255, 0.28);
     margin-top: 1px;
   }
   .step p {
@@ -238,43 +233,40 @@
   footer {
     margin-top: 36px;
     font-size: 12px;
-    color: rgba(255, 255, 255, 0.28);
-    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.26);
   }
 
   @media (max-width: 380px) {
-    h1 { font-size: 34px; }
+    h1 { font-size: 35px; }
     .cta { font-size: 16px; padding: 17px 20px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .blob, .mark { animation: none; }
+    .halo, .mark { animation: none; }
   }
 </style>
 </head>
 <body>
 
-<div class="ambient" aria-hidden="true">
-  <div class="blob blob-cyan"></div>
-  <div class="blob blob-violet"></div>
-</div>
+<div class="ambient" aria-hidden="true"></div>
+<div class="halo" aria-hidden="true"></div>
 
 <main>
   <div class="mark" aria-hidden="true">
     <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95" />
-          <stop offset="45%" stop-color="#B0F2FF" stop-opacity="0.42" />
-          <stop offset="100%" stop-color="#7EE8F2" stop-opacity="0" />
+          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.92" />
+          <stop offset="38%" stop-color="#E0AAFF" stop-opacity="0.40" />
+          <stop offset="100%" stop-color="#C99CFF" stop-opacity="0" />
         </radialGradient>
         <linearGradient id="spark" x1="50" y1="4" x2="50" y2="96" gradientUnits="userSpaceOnUse">
           <stop offset="0%" stop-color="#FFFFFF" />
-          <stop offset="50%" stop-color="#EAFCFF" />
-          <stop offset="100%" stop-color="#B0F2FF" />
+          <stop offset="55%" stop-color="#FBF7FF" />
+          <stop offset="100%" stop-color="#F0DFFF" />
         </linearGradient>
       </defs>
-      <circle cx="50" cy="50" r="46" fill="url(#glow)" />
+      <circle cx="50" cy="50" r="48" fill="url(#glow)" />
       <path d="M50 3 C52.5 30.5 61.5 44 97 50 C61.5 56 52.5 69.5 50 97 C47.5 69.5 38.5 56 3 50 C38.5 44 47.5 30.5 50 3 Z" fill="url(#spark)" />
     </svg>
   </div>
